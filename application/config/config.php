@@ -5,9 +5,9 @@ setlocale(LC_TIME, 'fr_FR.utf8','fra'); // date en langue française, fr_FR
 define('URL', dirname($_SERVER['PHP_SELF']).'/');
 define('DB_TYPE', 'mysql');
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'groupe8');
-define('DB_USER', 'groupe8');
-define('DB_PASS', 'tvF40a0N');
+define('DB_NAME', 'cadre_photo_php');
+define('DB_USER', 'cadre_photo_php');
+define('DB_PASS', 'HA7XtNK54PExKPTt');
 
 
 

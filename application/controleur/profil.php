@@ -12,19 +12,24 @@ class Profil extends Controleur{
 	public function index($args)
 	{
 		if (!Session::isLogin())
-			$this->login($args);
-		else
 		{
-			header('Location: '.URL.'actualite');
+			header('Location: '.URL.'accueil/index/not_logged_in');
 			exit();
 		}
+		
+		
+		require 'application/vue/_template/header.php';
+		require 'application/vue/profil/index.php';
+		require 'application/vue/_template/footer.php';
+		
+		
 	}
 
 
 	public function deconnexion($args)
 	{	// déconnexion puis redirection vers la page de login
 		Session::destroy();
-		header('Location: '.URL.'actualite');
+		header('Location: '.URL.'accueil/index/logout_ok');
 		exit();
 	}
 
@@ -34,7 +39,7 @@ class Profil extends Controleur{
 	{
 		if (Session::isLogin())
 		{
-			echo 'Vous êtes déjà connecté';
+			header('Location: '.URL.'profil');
 			return;
 		}
 		$mail = $_POST['mail'];
@@ -43,7 +48,7 @@ class Profil extends Controleur{
 		if(($r = Session::login($mail, $pass)) === true)
 			header('Location: '.URL.'profil');
 		else
-			header('Location: '.URL.'profil/login/'.$r);
+			header('Location: '.URL.'accueil/index/'.$r);
 	}
 
 
@@ -56,7 +61,7 @@ class Profil extends Controleur{
 	{
 		if (Session::isLogin())
 		{
-			echo 'Vous êtes déjà connecté';
+			header('Location: '.URL.'profil');
 			return;
 		}
 		$mail = $_POST['mail'];
@@ -65,9 +70,11 @@ class Profil extends Controleur{
 		$username = $_POST['username'];
 		parent::loadModel('Users');
 		if(($r = Session::register($mail, $pass, $pass2, $username)) === true)
-			header('Location: '.URL.'profil');
+		{
+			$this->loginCheck($args);
+		}
 		else
-			header('Location: '.URL.'profil/register/'.$r);
+			header('Location: '.URL.'accueil/index/'.$r);
 	}
 
 

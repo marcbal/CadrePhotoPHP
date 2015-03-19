@@ -7,7 +7,7 @@ Options -Indexes
 # If your app is in the root of your web folder, then leave it commented out
 # ici vous indiquez la base de votre URL par exemple /private/robert.duchmol/agenda/ si votre nom est Robert Duchmol et que votre application
 # se trouve dans le répertoire agenda.
-RewriteBase /cadrePhotoPHP/
+RewriteBase /CadrePhotoPHP/
 
 # Régles de réécriture
 # si le nom de la requête ne correspond pas à un répertoire
