@@ -1,0 +1,20 @@
+Options -MultiViews
+# Valide la réécriture
+RewriteEngine On
+# Interdiction de lister le contenu du répertoire
+Options -Indexes
+# When using the script within a sub-folder, put this path here, like /mysubfolder/
+# If your app is in the root of your web folder, then leave it commented out
+# ici vous indiquez la base de votre URL par exemple /private/robert.duchmol/agenda/ si votre nom est Robert Duchmol et que votre application
+# se trouve dans le répertoire agenda.
+RewriteBase /cadrePhotoPHP/
+
+# Régles de réécriture
+# si le nom de la requête ne correspond pas à un répertoire
+RewriteCond %{REQUEST_FILENAME} !-d
+# si le nom de la requête ne correspond pas à un fichier
+RewriteCond %{REQUEST_FILENAME} !-f
+# si le nom de la requête ne correspond pas à un lien
+RewriteCond %{REQUEST_FILENAME} !-l
+# alors on réécrit l'URL en utilisant la régle suivante (ajoute index.php?url=)devant l'URL donnée par le client
+RewriteRule ^(.+)$ index.php?url=$1 [QSA,L]
