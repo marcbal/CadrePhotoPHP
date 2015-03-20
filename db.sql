@@ -10,6 +10,7 @@ CREATE TABLE `users` (
 `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_password_hash` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `user_email` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_adresse` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 );
 

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xml:lang="fr"
-      lang="fr"
+<html lang="fr"
       dir="ltr">
 	<head>
 		<meta charset="utf-8"/>
@@ -12,14 +10,35 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	</head>
 	<body>
-	
-	
-	
-		<h1>Accueil</h1>
+		
+		<!-- Header de la page d'accueil -->
 		
 		
+		<!--
+			traitement du message d'erreur avec les variables :
+			
+			$message_arg : le message
+			$message_type : 'OK' ou 'ERROR' (pour la mise en forme)
+		-->
 		
-		<p>Register</p>
-		<p>Login</p>
+		
+		<!-- formulaire de login et d'enregistrement
+			Sur la maquette, on les avais mis côte à côte
+			
+			login :
+			nom des champs : mail, pass
+			action : profil/loginCheck
+			method : POST
+			
+			enregistrement :
+			nom des champs : mail, pass, pass2
+			action : profil/registerCheck
+			method : POST
+			
+		-->
+		
+		<!-- Pied de page habituel -->
+		
+		
 	</body>
 </html>

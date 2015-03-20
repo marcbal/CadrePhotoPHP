@@ -9,6 +9,17 @@ class Profil extends Controleur{
 		parent::__construct();
 	}
 
+	
+	/*
+		Arguments à prendre en compte :
+		
+		invalid_email
+		email_exist
+		empty_input_form
+		modif_ok
+		
+	
+	*/
 	public function index($args)
 	{
 		if (!Session::isLogin())
@@ -16,6 +27,46 @@ class Profil extends Controleur{
 			header('Location: '.URL.'accueil/index/not_logged_in');
 			exit();
 		}
+		
+		$user_id = Session::get('user_id');
+		$user_mail = Session::get('user_mail');
+		
+		parent::loadModel('Commandes');
+		$commandesSQL = new CommandesSQL();
+		$commandes = $commandesSQL->findByuser_id(Session::get('user_id'))->orderBy('time DESC')->execute();
+		
+		parent::loadModel('Users');
+		$usersSQL = new CommandesSQL();
+		$user = $usersSQL->findById($user_id);
+		
+		$adresse_complete = ($user->user_adresse === null);
+		
+		
+		$message_arg = null;
+		$message_type = null;
+		if (isset($args[0])) {
+			if ($args[0] == 'invalid_email') {
+				$message_arg = 'L\'e-mail indiqué n\'est pas valide';
+				$message_type = 'ERROR';
+			}
+			if ($args[0] == 'email_exist') {
+				$message_arg = 'L\'e-mail indiqué existe déjà dans la base de donnée';
+				$message_type = 'ERROR';
+			}
+			if ($args[0] == 'empty_input_form') {
+				$message_arg = 'Un des champs du formulaire est vide';
+				$message_type = 'ERROR';
+			}
+			if ($args[0] == 'modif_ok') {
+				$message_arg = 'Modifications enregistrés';
+				$message_type = 'OK';
+			}
+		}
+		
+		
+		
+		
+		
 		
 		
 		require 'application/vue/_template/header.php';
@@ -25,6 +76,13 @@ class Profil extends Controleur{
 		
 	}
 
+	
+	
+	
+	
+	
+	
+	
 
 	public function deconnexion($args)
 	{	// déconnexion puis redirection vers la page de login
@@ -67,9 +125,8 @@ class Profil extends Controleur{
 		$mail = $_POST['mail'];
 		$pass = $_POST['pass'];
 		$pass2 = $_POST['pass2'];
-		$username = $_POST['username'];
 		parent::loadModel('Users');
-		if(($r = Session::register($mail, $pass, $pass2, $username)) === true)
+		if(($r = Session::register($mail, $pass, $pass2)) === true)
 		{
 			$this->loginCheck($args);
 		}
@@ -93,18 +150,52 @@ class Profil extends Controleur{
 	{
 		if (!Session::isLogin())
 		{
-			header('Location: '.URL.'profil');
+			header('Location: '.URL.'accueil/index/not_logged_in');
 			exit();
 		}
+		
+		if (empty($_POST['mail']) || empty($_POST['adresse']))
+		{
+			header('Location: '.URL.'profil/index/empty_input_form');
+			exit();
+		}
+		
+		$mail = $_POST['mail'];
+		$adresse = $_POST['adresse'];
+		
+		
+		
+		// validation du mail
+		if (!NeverTrustUserInput::checkEmail($mail))
+		{
+			header('Location: '.URL.'profil/index/invalid_email');
+			exit();
+		}
+		
+		parent::loadModel('Users');
+		
+		// on vérifie si le mail existe dans la base de donnée
+		$users = new UsersSQL();
+		$user = $users->findByUser_email($mail)->execute();
+		if ($mail != Session::get('user_mail') AND count($user) != 0) return 'email_exist';
+		
+		
+		
 		$id = Session::get('user_id');
 
-		parent::loadModel('Users');
 		
 		$users = new UsersSQL();
 		$user = $users->findById($id);
-
-
-
+		
+		$user->user_email = $mail;
+		$user->user_adresse = $adresse;
+		
+		$user->save();
+		
+		// on n'oublie pas de mettre à jour les données de session
+		Session::set('user_mail', $user->user_email);
+		
+		header('Location: '.URL.'profil/index/modif_ok');
 	}
 
 

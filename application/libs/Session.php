@@ -97,7 +97,7 @@ class Session
 
 		Session::set('is_login', true);
 		Session::set('user_id', $user->getId());
-		Session::set('user_name', $user->user_name);
+		Session::set('user_mail', $user->user_email);
 		
 		
 		return true;
@@ -113,7 +113,7 @@ class Session
 	
 	
 	
-	public static function register($mail, $pass, $pass2, $user_name)
+	public static function register($mail, $pass, $pass2)
 	{
 		// vérification de la validité des champs
 		
@@ -130,7 +130,7 @@ class Session
 		
 		
 		
-		// on vérifie si le pseudo ou le mail existe dans la base de donnée
+		// on vérifie si le mail existe dans la base de donnée
 		$users = new UsersSQL();
 		$user = $users->findByUser_email($mail)->execute();
 		if (count($user) != 0) return 'email_exist';

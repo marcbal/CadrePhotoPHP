@@ -3,6 +3,7 @@
 class Users extends Table {
   public $user_password_hash;
   public $user_email;
+  public $user_adresse = null;
 
   public function __construct($user_email="",$user_password_hash="") {
     parent::__construct();

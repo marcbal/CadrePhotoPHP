@@ -3,6 +3,7 @@
 /**
  * Classe qui gère les vérifications des formulaires et autres données provenant des utilisateurs
  * 
+ * Par Marc Baloup
  */
 class NeverTrustUserInput
 {
