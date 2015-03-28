@@ -13,7 +13,7 @@
 <!-- bouton pour créer un cadre
 	href : commande/index
 	
-	important : griser le bouton si l'utilisateur n'a pas encore précisé
+	important : désactiver le bouton si l'utilisateur n'a pas encore précisé
 	son adresse postale (formulaire juste en dessous)
 	variable booléenne : $adresse_complete
 -->
@@ -22,7 +22,7 @@
 	formulaire d'édition du profil
 	method : POST
 	action : profil/editCheck
-	nom des champs : (non définis)
+	nom des champs : mail, adresse (multiligne)
 	
 	les champs seront précomplétés grace à la variable $user,
 	qui est une instance de la classe Users.

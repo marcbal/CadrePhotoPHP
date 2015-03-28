@@ -25,6 +25,20 @@ class Commande extends Controleur{
 			exit();
 		}
 		
+		
+		
+		/*
+		
+			Traitement du formulaire du cadre
+		
+		*/
+		
+		
+		
+		
+		
+		
+		
 		require 'application/vue/_template/header.php';
 		require 'application/vue/commande/index.php';
 		require 'application/vue/_template/footer.php';
@@ -42,6 +56,10 @@ class Commande extends Controleur{
 			exit();
 		}
 		
+		/*
+			On vérifie que tout le nécessaire est enregistré dans la variable session
+		*/
+		
 		require 'application/vue/_template/header.php';
 		require 'application/vue/commande/paiement.php';
 		require 'application/vue/_template/footer.php';
@@ -57,6 +75,8 @@ class Commande extends Controleur{
 			header('Location: '.URL.'accueil/index/not_logged_in');
 			exit();
 		}
+		
+		/* LE paiement est accepté systématiquement, on a pas de vérification à faire */
 		
 		
 		/*

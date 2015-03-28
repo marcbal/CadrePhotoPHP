@@ -1,0 +1,3 @@
+<!--
+	Formulaire de paiement (factice)
+-->
