@@ -92,7 +92,7 @@ class Session
 		}
 
 
-		// la connexion est bon
+		// la connexion est bonne
 
 
 		Session::set('is_login', true);

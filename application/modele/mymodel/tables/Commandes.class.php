@@ -17,9 +17,9 @@ class Commandes extends Table {
   public $bordure_bas_type;
   
 
-  public function __construct($user_id, $photo, $largeur, $hauteur, $marge, $epaisseur,
-	$bordure_gauche_couleur, $bordure_droite_couleur, $bordure_haut_couleur, $bordure_bas_couleur,
-	$bordure_gauche_type, $bordure_droite_type, $bordure_haut_type, $bordure_bas_type) {
+  public function __construct($user_id="", $photo="", $largeur="", $hauteur="", $marge="", $epaisseur="",
+	$bordure_gauche_couleur="", $bordure_droite_couleur="", $bordure_haut_couleur="", $bordure_bas_couleur="",
+	$bordure_gauche_type="", $bordure_droite_type="", $bordure_haut_type="", $bordure_bas_type="") {
     parent::__construct();
 	
 	
@@ -39,5 +39,7 @@ class Commandes extends Table {
   $this->bordure_bas_type = $bordure_bas_type;
 	
   }
+  
+  
   
 }

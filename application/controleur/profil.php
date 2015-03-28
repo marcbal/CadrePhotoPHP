@@ -33,13 +33,13 @@ class Profil extends Controleur{
 		
 		parent::loadModel('Commandes');
 		$commandesSQL = new CommandesSQL();
-		$commandes = $commandesSQL->findByuser_id(Session::get('user_id'))->orderBy('time DESC')->execute();
+		$commandes = $commandesSQL->findByuser_id(Session::get('user_id'))->orderBy('id DESC')->execute();
 		
 		parent::loadModel('Users');
-		$usersSQL = new CommandesSQL();
+		$usersSQL = new UsersSQL();
 		$user = $usersSQL->findById($user_id);
 		
-		$adresse_complete = ($user->user_adresse === null);
+		$adresse_complete = !($user->user_address === null);
 		
 		
 		$message_arg = null;
@@ -47,6 +47,10 @@ class Profil extends Controleur{
 		if (isset($args[0])) {
 			if ($args[0] == 'invalid_email') {
 				$message_arg = 'L\'e-mail indiqué n\'est pas valide';
+				$message_type = 'ERROR';
+			}
+			if ($args[0] == 'invalid_password') {
+				$message_arg = 'Le mot de passe indiqué est trop court';
 				$message_type = 'ERROR';
 			}
 			if ($args[0] == 'email_exist') {
@@ -64,7 +68,7 @@ class Profil extends Controleur{
 		}
 		
 		
-		
+		$titre_page = "Bienvenue";
 		
 		
 		
@@ -154,14 +158,15 @@ class Profil extends Controleur{
 			exit();
 		}
 		
-		if (empty($_POST['mail']) || empty($_POST['adresse']))
+		if (empty($_POST['mail']) || empty($_POST['address']) || empty($_POST['phone']))
 		{
 			header('Location: '.URL.'profil/index/empty_input_form');
 			exit();
 		}
 		
 		$mail = $_POST['mail'];
-		$adresse = $_POST['adresse'];
+		$address = $_POST['address'];
+		$phone= $_POST['phone'];
 		
 		
 		
@@ -188,7 +193,17 @@ class Profil extends Controleur{
 		$user = $users->findById($id);
 		
 		$user->user_email = $mail;
-		$user->user_adresse = $adresse;
+		$user->user_address = $address;
+		$user->user_phone= $phone;
+		if (!empty($_POST['pass'])) {
+			$pass = $_POST['pass'];
+			if (!NeverTrustUserInput::checkPasswordValidity($pass)) {
+				header('Location: '.URL.'profil/index/invalid_password');
+				exit();
+			}
+			
+			$user->user_password_hash = password_hash($pass, PASSWORD_DEFAULT);
+		}
 		
 		$user->save();
 		
@@ -197,12 +212,4 @@ class Profil extends Controleur{
 		
 		header('Location: '.URL.'profil/index/modif_ok');
 	}
-
-
-
-
-
-
-
-
 }
